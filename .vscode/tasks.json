@@ -1,0 +1,46 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "在 Cursor 開啟 Tetris",
+      "dependsOrder": "sequence",
+      "dependsOn": ["啟動 Tetris 伺服器", "開啟 Tetris 預覽"]
+    },
+    {
+      "label": "啟動 Tetris 伺服器",
+      "type": "shell",
+      "command": "ruby -run -e httpd . -p 8080",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "isBackground": true,
+      "problemMatcher": {
+        "pattern": { "regexp": "^$" },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "WEBrick",
+          "endsPattern": "HTTPServer#start"
+        }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": false
+      }
+    },
+    {
+      "label": "開啟 Tetris 預覽",
+      "type": "shell",
+      "command": "echo ${input:openTetrisBrowser}",
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "openTetrisBrowser",
+      "type": "command",
+      "command": "simpleBrowser.show",
+      "args": ["http://127.0.0.1:8080/tetris.html"]
+    }
+  ]
+}
